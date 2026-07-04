@@ -1,6 +1,7 @@
 {
     "name": "@agent-memories/mcp",
     "version": "0.1.0",
+    "author": "Yorick Chan <yorick@gmail.com> ",
     "description": "Universal AI-agent memory — MCP client for agent-memories server",
     "type": "module",
     "main": "./dist/cli.js",

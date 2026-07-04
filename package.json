@@ -1,6 +1,7 @@
 {
     "name": "agent-memories",
     "version": "0.1.0",
+    "author": "Yorick Chan <yorick@gmail.com> ",
     "type": "module",
     "private": true,
     "workspaces": [

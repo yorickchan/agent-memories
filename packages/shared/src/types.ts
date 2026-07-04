@@ -13,7 +13,6 @@ export type ServerConfig = z.infer<typeof ServerConfigSchema>;
 export const ConfigSchema = z
   .object({
     user_id: z.string().min(1),
-    auth_token: z.string().min(32, "auth_token must be at least 32 characters"),
     server: ServerConfigSchema,
   })
   .strict();

@@ -19,8 +19,7 @@ Set environment variables to point at your agent-memories backend:
 ```bash
 # Backend connection
 export AGENT_MEMORIES_PORT=8765
-export AGENT_MEMORIES_API_KEY="your-user-api-key"    # v1.1: user API key (am_live_...)
-export AGENT_MEMORIES_AUTH_TOKEN="your-auth-token"    # legacy: agent auth token
+export AGENT_MEMORIES_API_KEY="your-user-api-key"    # user API key (am_live_...)
 ```
 
 Get a user API key by registering with the backend:
@@ -43,8 +42,7 @@ curl -X POST http://127.0.0.1:8765/api/auth/register \
       "args": ["-y", "@agent-memories/mcp"],
       "env": {
         "AGENT_MEMORIES_PORT": "8765",
-        "AGENT_MEMORIES_API_KEY": "am_live_your-api-key",
-        "AGENT_MEMORIES_AUTH_TOKEN": "your-auth-token"
+        "AGENT_MEMORIES_API_KEY": "am_live_your-api-key"
       }
     }
   }

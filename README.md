@@ -21,7 +21,6 @@ npm install @agent-memories/mcp
 ```bash
 export AGENT_MEMORIES_PORT=8765
 export AGENT_MEMORIES_API_KEY="your-backend-api-key"
-export AGENT_MEMORIES_AUTH_TOKEN="your-agent-auth-token"
 ```
 
 ## MCP Configuration
@@ -36,8 +35,7 @@ Add to your MCP client config (Claude Desktop, Claude Code, etc.):
       "args": ["-y", "@agent-memories/mcp"],
       "env": {
         "AGENT_MEMORIES_PORT": "8765",
-        "AGENT_MEMORIES_API_KEY": "am_live_your-api-key",
-        "AGENT_MEMORIES_AUTH_TOKEN": "your-auth-token"
+        "AGENT_MEMORIES_API_KEY": "am_live_your-api-key"
       }
     }
   }

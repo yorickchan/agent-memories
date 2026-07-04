@@ -22,7 +22,6 @@ Set environment variables to point at your backend:
 ```bash
 export AGENT_MEMORIES_PORT=8765
 export AGENT_MEMORIES_API_KEY="your-backend-api-key"
-export AGENT_MEMORIES_AUTH_TOKEN="your-agent-auth-token"
 ```
 
 ## MCP Client Config
@@ -35,12 +34,8 @@ export AGENT_MEMORIES_AUTH_TOKEN="your-agent-auth-token"
       "args": ["-y", "@agent-memories/mcp"],
       "env": {
         "AGENT_MEMORIES_PORT": "8765",
-        "AGENT_MEMORIES_API_KEY": "am_live_your-api-key",
-        "AGENT_MEMORIES_AUTH_TOKEN": "your-auth-token"
+        "AGENT_MEMORIES_API_KEY": "am_live_your-api-key"
       }
-    }
-  }
-}
 ```
 
 ## Architecture
