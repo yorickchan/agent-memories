@@ -4,11 +4,11 @@
 
 `@agent-memories/mcp` translates MCP tool calls into REST API requests to a running agent-memories backend. It provides 14 MCP tools across three domains:
 
-| Domain | Tools |
-|--------|-------|
-| Memory | `write`, `search`, `get`, `update`, `delete`, `list` |
+| Domain          | Tools                                                             |
+| --------------- | ----------------------------------------------------------------- |
+| Memory          | `write`, `search`, `get`, `update`, `delete`, `list`              |
 | Knowledge Graph | `upsert_node`, `upsert_edge`, `neighborhood`, `get_node`, `graph` |
-| Working Memory | `put`, `get`, `list`, `delete` |
+| Working Memory  | `put`, `get`, `list`, `delete`                                    |
 
 ## Install
 
@@ -24,7 +24,9 @@ export AGENT_MEMORIES_API_KEY="your-backend-api-key"
 export AGENT_MEMORIES_AUTH_TOKEN="your-agent-auth-token"
 ```
 
-## Usage
+## MCP Configuration
+
+Add to your MCP client config (Claude Desktop, Claude Code, etc.):
 
 ```json
 {
@@ -42,6 +44,12 @@ export AGENT_MEMORIES_AUTH_TOKEN="your-agent-auth-token"
 }
 ```
 
+Or run directly:
+
+```bash
+npx @agent-memories/mcp
+```
+
 ## Development
 
 ```bash
@@ -54,10 +62,10 @@ See [SKILL.md](SKILL.md) for the full MCP tool catalog and agent integration ins
 
 ## Packages
 
-| Package | Description |
-|---------|-------------|
-| [`@agent-memories/mcp`](packages/mcp/) | MCP stdio proxy — the published npm package |
-| [`@agent-memories/shared`](packages/shared/) | Shared types, DTOs, and service interfaces |
+| Package                                      | Description                                 |
+| -------------------------------------------- | ------------------------------------------- |
+| [`@agent-memories/mcp`](packages/mcp/)       | MCP stdio proxy — the published npm package |
+| [`@agent-memories/shared`](packages/shared/) | Shared types, DTOs, and service interfaces  |
 
 ## License
 
