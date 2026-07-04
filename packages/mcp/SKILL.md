@@ -32,7 +32,7 @@ export AGENT_MEMORIES_AUTH_TOKEN="your-agent-auth-token"
   "mcpServers": {
     "agent-memories": {
       "command": "npx",
-      "args": ["@agent-memories/mcp"],
+      "args": ["-y", "@agent-memories/mcp"],
       "env": {
         "AGENT_MEMORIES_PORT": "8765",
         "AGENT_MEMORIES_API_KEY": "am_live_your-api-key",
