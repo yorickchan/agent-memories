@@ -36,6 +36,9 @@ export AGENT_MEMORIES_API_KEY="your-backend-api-key"
         "AGENT_MEMORIES_PORT": "8765",
         "AGENT_MEMORIES_API_KEY": "am_live_your-api-key"
       }
+    }
+  }
+}
 ```
 
 ## Architecture
@@ -74,7 +77,6 @@ bun run agent-memories-mcp
 - [Memory verbs](references/memory.md) — `memory.write`, `memory.search`, `memory.get`, `memory.update`, `memory.delete`, `memory.list`
 - [Knowledge Graph verbs](references/kg.md) — `kg.upsert_node`, `kg.upsert_edge`, `kg.neighborhood`, `kg.get_node`, `kg.graph`
 - [Working Memory verbs](references/wm.md) — `wm.put`, `wm.get`, `wm.list`, `wm.delete`
-- [REST API reference](references/rest-api.md)
 
 ## Agent Auto-Memory Instructions
 
