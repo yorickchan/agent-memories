@@ -1,0 +1,14 @@
+node_modules/
+dist/
+agent-memories
+*.sqlite
+*.sqlite-journal
+*.sqlite-shm
+*.sqlite-wal
+.env
+.env.*
+coverage/
+*.bun-build
+.DS_Store
+*.tsbuildinfo
+*.tsbuildinfo

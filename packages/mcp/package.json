@@ -1,0 +1,49 @@
+{
+    "name": "@agent-memories/mcp",
+    "version": "0.1.0",
+    "description": "Universal AI-agent memory — MCP client for agent-memories server",
+    "type": "module",
+    "main": "./dist/cli.js",
+    "types": "./dist/cli.d.ts",
+    "bin": {
+        "agent-memories-mcp": "./dist/cli.js"
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/cli.d.ts",
+            "import": "./dist/cli.js"
+        }
+    },
+    "files": [
+        "dist",
+        "SKILL.md",
+        "README.md",
+        "LICENSE"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "directory": "packages/mcp"
+    },
+    "scripts": {
+        "build": "bun run build:types && bun run build:js && bun run build:skill",
+        "build:types": "tsc --emitDeclarationOnly --outDir dist",
+        "build:js": "bun build src/cli.ts --outdir dist --target node --format esm --minify",
+        "build:skill": "cp SKILL.md dist/ && cp -r references/ dist/references/",
+        "prepublishOnly": "bun run build",
+        "test": "echo 'Tests need import path updates for monorepo'",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@agent-memories/shared": "workspace:*",
+        "@modelcontextprotocol/sdk": "^1.29.0",
+        "pino": "^10.3.1",
+        "zod": "^4.4.3"
+    },
+    "devDependencies": {
+        "typescript": "^6.0.3",
+        "vitest": "^4.1.9"
+    }
+}
