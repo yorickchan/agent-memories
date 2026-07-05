@@ -1,34 +1,47 @@
-# @agent-memories/mcp
+# @agentmemories/mcp
 
-> Universal AI-agent memory — MCP client for agent-memories server. v1.1.
+> Universal AI-agent memory — MCP client for agent-memories server. v1.2.
 
 Drop-in MCP server that connects any MCP-speaking AI agent to an agent-memories backend. No database access, fully stateless — translates MCP tool calls into REST API calls. Supports user API keys (v1.1) and legacy server API key auth.
 
 ## Install
 
 ```bash
-npm install @agent-memories/mcp
+npm install @agentmemories/mcp
 # or
-bun add @agent-memories/mcp
+bun add @agentmemories/mcp
 ```
 
 ## Configure
 
-Set environment variables to point at your agent-memories backend:
+Set environment variables to point at your agent-memories backend. Defaults to `https://agent-memories.com` — no config needed for the hosted service.
 
 ```bash
-# Backend connection
-export AGENT_MEMORIES_PORT=8765
-export AGENT_MEMORIES_API_KEY="your-user-api-key"    # user API key (am_live_...)
+# Required: your user API key
+export AGENT_MEMORIES_API_KEY="am_live_your-api-key"
 ```
 
-Get a user API key by registering with the backend:
+**Local dev** — point at a local backend:
 
 ```bash
-curl -X POST http://127.0.0.1:8765/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"email":"you@example.com","password":"your-password"}'
+export AGENT_MEMORIES_HOST="http://127.0.0.1:8765"
+export AGENT_MEMORIES_API_KEY="am_live_your-api-key"
 ```
+
+**Self-hosted** — point at your own instance:
+
+```bash
+export AGENT_MEMORIES_HOST="https://memories.your-domain.com"
+export AGENT_MEMORIES_API_KEY="am_live_your-api-key"
+```
+
+### Environment variables
+
+| Variable                 | Default                      | Description                                                                                             |
+| ------------------------ | ---------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `AGENT_MEMORIES_HOST`    | `https://agent-memories.com` | Backend URL. Full URL (`https://...`) used as-is; bare hostname gets `http://` + `AGENT_MEMORIES_PORT`. |
+| `AGENT_MEMORIES_PORT`    | `8765`                       | Port appended to bare hostnames (ignored when `AGENT_MEMORIES_HOST` is a full URL).                     |
+| `AGENT_MEMORIES_API_KEY` | _(required)_                 | User API key (`am_live_...`) for authentication.                                                        |
 
 ## Usage
 
@@ -39,9 +52,25 @@ curl -X POST http://127.0.0.1:8765/api/auth/register \
   "mcpServers": {
     "agent-memories": {
       "command": "bunx",
-      "args": ["@agent-memories/mcp"],
+      "args": ["@agentmemories/mcp"],
       "env": {
-        "AGENT_MEMORIES_PORT": "8765",
+        "AGENT_MEMORIES_API_KEY": "am_live_your-api-key"
+      }
+    }
+  }
+}
+```
+
+For a custom instance, add `AGENT_MEMORIES_HOST`:
+
+```json
+{
+  "mcpServers": {
+    "agent-memories": {
+      "command": "bunx",
+      "args": ["@agentmemories/mcp"],
+      "env": {
+        "AGENT_MEMORIES_HOST": "https://my-instance.example.com",
         "AGENT_MEMORIES_API_KEY": "am_live_your-api-key"
       }
     }
@@ -52,12 +81,8 @@ curl -X POST http://127.0.0.1:8765/api/auth/register \
 ### Direct
 
 ```bash
-bunx @agent-memories/mcp
+bunx @agentmemories/mcp
 ```
-
-## Dashboard
-
-Visit `http://127.0.0.1:8765` for the web dashboard — login, browse memories, and explore the knowledge graph interactively.
 
 ## Tools
 

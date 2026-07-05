@@ -28,7 +28,12 @@ export class BackendClient {
   private headers: Record<string, string>;
 
   constructor(config: Config) {
-    this.baseUrl = `http://127.0.0.1:${config.server.port}`;
+    const host = config.server.host;
+    if (host.startsWith("http://") || host.startsWith("https://")) {
+      this.baseUrl = host;
+    } else {
+      this.baseUrl = `http://${host}:${config.server.port}`;
+    }
     this.headers = {
       "Authorization": `Bearer ${config.server.api_key}`,
       "Content-Type": "application/json",
