@@ -1,13 +1,13 @@
 {
-    "name": "@agent-memories/mcp",
-    "version": "0.1.0",
+    "name": "@agentmemories/mcp",
+    "version": "0.1.2",
     "author": "Yorick Chan <yorick@gmail.com> ",
     "description": "Universal AI-agent memory — MCP client for agent-memories server",
     "type": "module",
     "main": "./dist/cli.js",
     "types": "./dist/cli.d.ts",
     "bin": {
-        "agent-memories-mcp": "./dist/cli.js"
+        "agent-memories-mcp": "./dist/agent-memories-mcp"
     },
     "exports": {
         ".": {
@@ -31,7 +31,7 @@
     "scripts": {
         "build": "bun run build:types && bun run build:js && bun run build:skill",
         "build:types": "tsc --emitDeclarationOnly --outDir dist",
-        "build:js": "bun build src/cli.ts --outdir dist --target node --format esm --minify && printf '#!/usr/bin/env node\\n' | cat - dist/cli.js > dist/cli.js.tmp && mv dist/cli.js.tmp dist/cli.js",
+        "build:js": "bun build src/cli.ts --outdir dist --target node --format esm --minify && cp dist/cli.js dist/agent-memories-mcp && printf '#!/usr/bin/env node\\n' | cat - dist/agent-memories-mcp > dist/agent-memories-mcp.tmp && mv dist/agent-memories-mcp.tmp dist/agent-memories-mcp && chmod +x dist/agent-memories-mcp",
         "build:skill": "cp SKILL.md dist/ && cp -r references/ dist/references/",
         "prepublishOnly": "bun run build",
         "test": "echo 'Tests need import path updates for monorepo'",

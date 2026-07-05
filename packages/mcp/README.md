@@ -38,8 +38,8 @@ curl -X POST http://127.0.0.1:8765/api/auth/register \
 {
   "mcpServers": {
     "agent-memories": {
-      "command": "npx",
-      "args": ["-y", "@agent-memories/mcp"],
+      "command": "bunx",
+      "args": ["@agent-memories/mcp"],
       "env": {
         "AGENT_MEMORIES_PORT": "8765",
         "AGENT_MEMORIES_API_KEY": "am_live_your-api-key"
@@ -52,7 +52,7 @@ curl -X POST http://127.0.0.1:8765/api/auth/register \
 ### Direct
 
 ```bash
-npx @agent-memories/mcp
+bunx @agent-memories/mcp
 ```
 
 ## Dashboard
