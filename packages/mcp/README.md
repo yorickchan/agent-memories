@@ -2,7 +2,7 @@
 
 > Universal AI-agent memory — MCP client for agent-memories server. v1.2.
 
-Drop-in MCP server that connects any MCP-speaking AI agent to an agent-memories backend. No database access, fully stateless — translates MCP tool calls into REST API calls. Supports user API keys (v1.1) and legacy server API key auth.
+Drop-in MCP server that connects any MCP-speaking AI agent to an agent-memories backend. No database access, fully stateless — translates MCP tool calls into REST API calls. Authenticates with per-user API keys.
 
 ## Install
 

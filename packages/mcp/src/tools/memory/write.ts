@@ -8,7 +8,7 @@ import { z } from "zod";
 import { McpError } from "@modelcontextprotocol/sdk/types.js";
 import type { ToolHandler } from "../../router.js";
 import type { Config } from "@agent-memories/shared"
-import { scopeFromConfigAndArg } from "@agent-memories/shared"
+import { scopeFromUserId } from "@agent-memories/shared"
 import { MemoryWriteArgsSchema } from "../../schemas/memory.js";
 import { sanitizeSchema } from "../../schemas/helpers.js";
 import type { MemoryService } from "@agent-memories/shared"
@@ -25,7 +25,7 @@ export function makeWriteHandler(
     inputSchema: sanitizeSchema(z.toJSONSchema(MemoryWriteArgsSchema)),
     async handle(args: unknown) {
       const parsed = MemoryWriteArgsSchema.parse(args);
-      const ctx = scopeFromConfigAndArg(config, parsed.project_id);
+      const ctx = scopeFromUserId("mcp-client", parsed.project_id);
       try {
         return await service.write(ctx, {
           content: parsed.content,

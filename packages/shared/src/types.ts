@@ -6,13 +6,14 @@ import { z } from "zod";
 export const ServerConfigSchema = z.object({
   port: z.number().int().min(0).max(65535).default(8765),
   host: z.string().min(1).default("127.0.0.1"),
-  api_key: z.string().min(32, "server.api_key must be at least 32 characters"),
+  cors_origin: z.string().optional().default("http://localhost:5173"),
 }).strict();
 export type ServerConfig = z.infer<typeof ServerConfigSchema>;
 
 export const ConfigSchema = z
   .object({
-    user_id: z.string().min(1),
+    secret: z.string().optional(),
+    api_key: z.string().default(""),
     server: ServerConfigSchema,
   })
   .strict();

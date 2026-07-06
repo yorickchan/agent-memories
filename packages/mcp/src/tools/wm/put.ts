@@ -3,7 +3,7 @@ import type { WmService } from "@agent-memories/shared"
 import { WmServiceError } from "@agent-memories/shared"
 import { WmPutArgsSchema } from "../../schemas/wm.js";
 import { sanitizeSchema } from "../../schemas/helpers.js";
-import { scopeFromConfigAndArg } from "@agent-memories/shared"
+import { scopeFromUserId } from "@agent-memories/shared"
 import { McpError } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 
@@ -14,7 +14,7 @@ export function makeWmPutHandler(config: Config, service: WmService) {
     inputSchema: sanitizeSchema(z.toJSONSchema(WmPutArgsSchema)),
     async handle(args: unknown) {
       const parsed = WmPutArgsSchema.parse(args);
-      const ctx = scopeFromConfigAndArg(config);
+      const ctx = scopeFromUserId("mcp-client");
       try {
         return service.put(ctx, parsed.session_id, parsed.key, parsed.value, parsed.if_match, parsed.ttl_seconds);
       } catch (err) {

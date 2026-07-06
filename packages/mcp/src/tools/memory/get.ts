@@ -9,7 +9,7 @@ import { z } from "zod";
 import { McpError } from "@modelcontextprotocol/sdk/types.js";
 import type { ToolHandler } from "../../router.js";
 import type { Config } from "@agent-memories/shared"
-import { scopeFromConfigAndArg } from "@agent-memories/shared"
+import { scopeFromUserId } from "@agent-memories/shared"
 import { MemoryGetArgsSchema } from "../../schemas/memory.js";
 import { sanitizeSchema } from "../../schemas/helpers.js";
 import type { MemoryService } from "@agent-memories/shared"
@@ -26,7 +26,7 @@ export function makeGetHandler(
     inputSchema: sanitizeSchema(z.toJSONSchema(MemoryGetArgsSchema)),
     async handle(args: unknown) {
       const parsed = MemoryGetArgsSchema.parse(args);
-      const ctx = scopeFromConfigAndArg(config, parsed.project_id);
+      const ctx = scopeFromUserId("mcp-client", parsed.project_id);
       try {
         return service.get(ctx, parsed.id);
       } catch (err) {

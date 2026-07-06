@@ -8,7 +8,7 @@ import { z } from "zod";
 import { McpError } from "@modelcontextprotocol/sdk/types.js";
 import type { ToolHandler } from "../../router.js";
 import type { Config } from "@agent-memories/shared"
-import { scopeFromConfigAndArg } from "@agent-memories/shared"
+import { scopeFromUserId } from "@agent-memories/shared"
 import { KgNeighborhoodArgsSchema } from "../../schemas/kg.js";
 import { sanitizeSchema } from "../../schemas/helpers.js";
 import type { KgService } from "@agent-memories/shared"
@@ -25,7 +25,7 @@ export function makeNeighborhoodHandler(
     inputSchema: sanitizeSchema(z.toJSONSchema(KgNeighborhoodArgsSchema)),
     async handle(args: unknown) {
       const parsed = KgNeighborhoodArgsSchema.parse(args);
-      const ctx = scopeFromConfigAndArg(config, parsed.project_id);
+      const ctx = scopeFromUserId("mcp-client", parsed.project_id);
       try {
         return await service.neighborhood(ctx, {
           node_id: parsed.node_id,

@@ -9,7 +9,7 @@ import { z } from "zod";
 import { McpError } from "@modelcontextprotocol/sdk/types.js";
 import type { ToolHandler } from "../../router.js";
 import type { Config } from "@agent-memories/shared"
-import { scopeFromConfigAndArg } from "@agent-memories/shared"
+import { scopeFromUserId } from "@agent-memories/shared"
 import { MemorySearchArgsSchema } from "../../schemas/memory.js";
 import { sanitizeSchema } from "../../schemas/helpers.js";
 import type { MemoryService } from "@agent-memories/shared"
@@ -26,7 +26,7 @@ export function makeSearchHandler(
     inputSchema: sanitizeSchema(z.toJSONSchema(MemorySearchArgsSchema)),
     async handle(args: unknown) {
       const parsed = MemorySearchArgsSchema.parse(args);
-      const ctx = scopeFromConfigAndArg(config, parsed.project_id);
+      const ctx = scopeFromUserId("mcp-client", parsed.project_id);
       try {
         return await service.search(ctx, {
           query: parsed.query,

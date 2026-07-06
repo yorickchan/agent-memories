@@ -1,6 +1,6 @@
 export type { Config, ServerConfig } from "./types.js";
 export type { ScopeContext } from "./scope.js";
-export { scopeFromConfigAndArg } from "./scope.js";
+export { scopeFromUserId } from "./scope.js";
 export {
   MemoryServiceError,
   KgServiceError,

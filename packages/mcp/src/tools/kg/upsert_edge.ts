@@ -8,7 +8,7 @@ import { z } from "zod";
 import { McpError } from "@modelcontextprotocol/sdk/types.js";
 import type { ToolHandler } from "../../router.js";
 import type { Config } from "@agent-memories/shared"
-import { scopeFromConfigAndArg } from "@agent-memories/shared"
+import { scopeFromUserId } from "@agent-memories/shared"
 import { KgUpsertEdgeArgsSchema } from "../../schemas/kg.js";
 import { sanitizeSchema } from "../../schemas/helpers.js";
 import type { KgService } from "@agent-memories/shared"
@@ -25,14 +25,14 @@ export function makeUpsertEdgeHandler(
     inputSchema: sanitizeSchema(z.toJSONSchema(KgUpsertEdgeArgsSchema)),
     async handle(args: unknown) {
       const parsed = KgUpsertEdgeArgsSchema.parse(args);
-      const ctx = scopeFromConfigAndArg(config, parsed.project_id);
+      const ctx = scopeFromUserId("mcp-client", parsed.project_id);
       try {
         return await service.upsertEdge(ctx, {
           subject_id: parsed.subject_id,
           predicate: parsed.predicate,
           object_id: parsed.object_id,
           ...(parsed.props !== undefined ? { props: parsed.props } : {}),
-          source_agent: config.user_id,
+          source_agent: "mcp-client",
         });
       } catch (err) {
         if (err instanceof KgServiceError) {

@@ -16,7 +16,8 @@ export function createServer(_config: Config, tools: ToolRegistry): Server {
     { capabilities: { tools: {} } },
   );
 
-  // Auth is handled by the backend (server.api_key), not the MCP proxy.
+  // Auth is handled by the backend (per-user API keys), not the MCP proxy.
+  // The proxy passes the user's API key via Authorization: Bearer header.
   // The proxy runs as a local child process — the caller already has
   // filesystem access to the config file.
 

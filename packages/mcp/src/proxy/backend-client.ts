@@ -35,7 +35,7 @@ export class BackendClient {
       this.baseUrl = `http://${host}:${config.server.port}`;
     }
     this.headers = {
-      "Authorization": `Bearer ${config.server.api_key}`,
+      "Authorization": `Bearer ${config.api_key}`,
       "Content-Type": "application/json",
     };
   }

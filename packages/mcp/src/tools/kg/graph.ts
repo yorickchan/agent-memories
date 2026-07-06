@@ -8,7 +8,7 @@ import { z } from "zod";
 import { McpError } from "@modelcontextprotocol/sdk/types.js";
 import type { ToolHandler } from "../../router.js";
 import type { Config } from "@agent-memories/shared"
-import { scopeFromConfigAndArg } from "@agent-memories/shared"
+import { scopeFromUserId } from "@agent-memories/shared"
 import { KgGraphArgsSchema } from "../../schemas/kg.js";
 import { sanitizeSchema } from "../../schemas/helpers.js";
 import type { KgService } from "@agent-memories/shared"
@@ -25,7 +25,7 @@ export function makeGraphHandler(
     inputSchema: sanitizeSchema(z.toJSONSchema(KgGraphArgsSchema)),
     async handle(args: unknown) {
       const parsed = KgGraphArgsSchema.parse(args);
-      const ctx = scopeFromConfigAndArg(config, parsed.project_id);
+      const ctx = scopeFromUserId("mcp-client", parsed.project_id);
       try {
         return await service.graph(ctx, {
           format: parsed.format,
