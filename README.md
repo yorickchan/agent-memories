@@ -2,7 +2,7 @@
 
 > Stateless MCP stdio proxy for the agent-memories memory server.
 
-`@agentmemories/mcp` translates MCP tool calls into REST API requests to a running agent-memories backend. Defaults to `https://agent-memories.com` — no config needed for the hosted service. It provides 14 MCP tools across three domains:
+`@agentmemories/mcp` translates MCP tool calls into REST API requests to a running agent-memories backend. It provides 15 MCP tools across three domains:
 
 | Domain          | Tools                                                             |
 | --------------- | ----------------------------------------------------------------- |
@@ -18,28 +18,16 @@ npm install @agentmemories/mcp
 
 ## Configure
 
-```bash
-# Required: your user API key
-export AGENT_MEMORIES_API_KEY="am_live_your-api-key"
-
-# Optional: point at a custom instance (defaults to https://agent-memories.com)
-export AGENT_MEMORIES_HOST="https://memories.your-domain.com"
-
-# Or for local dev:
-export AGENT_MEMORIES_HOST="http://127.0.0.1:8765"
-```
-
-## MCP Configuration
-
-Add to your MCP client config (Claude Desktop, Claude Code, etc.):
+`AGENT_MEMORIES_HOST` and `AGENT_MEMORIES_API_KEY` are **required** — there are no hardcoded defaults. Set them in the `env` block of your MCP client config.
 
 ```json
 {
   "mcpServers": {
     "agent-memories": {
       "command": "bunx",
-      "args": ["-y", "@agentmemories/mcp"],
+      "args": ["@agentmemories/mcp"],
       "env": {
+        "AGENT_MEMORIES_HOST": "http://127.0.0.1:8765",
         "AGENT_MEMORIES_API_KEY": "am_live_your-api-key"
       }
     }
@@ -47,16 +35,16 @@ Add to your MCP client config (Claude Desktop, Claude Code, etc.):
 }
 ```
 
-For a custom instance, add `AGENT_MEMORIES_HOST`:
+Self-hosted:
 
 ```json
 {
   "mcpServers": {
     "agent-memories": {
       "command": "bunx",
-      "args": ["-y", "@agentmemories/mcp"],
+      "args": ["@agentmemories/mcp"],
       "env": {
-        "AGENT_MEMORIES_HOST": "https://my-instance.example.com",
+        "AGENT_MEMORIES_HOST": "https://memories.your-domain.com",
         "AGENT_MEMORIES_API_KEY": "am_live_your-api-key"
       }
     }
@@ -64,11 +52,15 @@ For a custom instance, add `AGENT_MEMORIES_HOST`:
 }
 ```
 
-Or run directly:
+The proxy exits with code 78 at startup if `AGENT_MEMORIES_HOST` is missing.
 
-```bash
-npx @agentmemories/mcp
-```
+## Using the Skill
+
+This package ships as a **skill**. To enable auto-discovery:
+
+1. Copy `SKILL.md` and the `references/` directory into your agent's skill path (e.g. `~/.omp/agent/skills/agent-memories/`).
+2. Configure the MCP server in your agent's MCP config (e.g. `~/.omp/agent/mcp.json`) with the `env` block above.
+3. The agent auto-discovers the skill on next session and uses agent-memories tools proactively.
 
 ## Development
 

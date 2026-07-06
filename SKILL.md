@@ -5,7 +5,7 @@ description: Universal AI-agent memory server — memories, knowledge graph, and
 
 # Agent Memories — MCP Proxy
 
-A stateless MCP stdio proxy that translates MCP tool calls into REST API calls to an agent-memories backend. Published as `@agentmemories/mcp` on npm. Defaults to `https://agent-memories.com` — no config needed for the hosted service.
+A stateless MCP stdio proxy that translates MCP tool calls into REST API calls to an agent-memories backend. Published as `@agentmemories/mcp` on npm.
 
 **This package requires a running agent-memories backend.** It does not include the backend itself — it is the MCP client layer only.
 
@@ -17,28 +17,18 @@ npm install @agentmemories/mcp
 bun add @agentmemories/mcp
 ```
 
-Set environment variables to point at your backend:
+## Configuration
 
-```bash
-# Required: your user API key
-export AGENT_MEMORIES_API_KEY="am_live_your-api-key"
-
-# Optional: point at a custom instance (defaults to https://agent-memories.com)
-export AGENT_MEMORIES_HOST="https://memories.your-domain.com"
-
-# Local dev
-export AGENT_MEMORIES_HOST="http://127.0.0.1:8765"
-```
-
-## MCP Client Config
+`AGENT_MEMORIES_HOST` and `AGENT_MEMORIES_API_KEY` are **required** — there are no hardcoded defaults. Set them in the `env` block of your MCP client config (not shell environment):
 
 ```json
 {
   "mcpServers": {
     "agent-memories": {
-      "command": "npx",
-      "args": ["-y", "@agentmemories/mcp"],
+      "command": "bunx",
+      "args": ["@agentmemories/mcp"],
       "env": {
+        "AGENT_MEMORIES_HOST": "http://127.0.0.1:8765",
         "AGENT_MEMORIES_API_KEY": "am_live_your-api-key"
       }
     }
@@ -46,22 +36,34 @@ export AGENT_MEMORIES_HOST="http://127.0.0.1:8765"
 }
 ```
 
-For a custom instance:
+The proxy exits with code 78 at startup if `AGENT_MEMORIES_HOST` is missing.
 
-```json
-{
-  "mcpServers": {
-    "agent-memories": {
-      "command": "npx",
-      "args": ["-y", "@agentmemories/mcp"],
-      "env": {
-        "AGENT_MEMORIES_HOST": "https://my-instance.example.com",
-        "AGENT_MEMORIES_API_KEY": "am_live_your-api-key"
-      }
-    }
-  }
-}
-```
+### Environment variables
+
+All variables are read from `process.env` — set them in your MCP client's `env` block.
+
+| Variable                     | Required | Description                                                                                  |
+| ---------------------------- | -------- | -------------------------------------------------------------------------------------------- |
+| `AGENT_MEMORIES_HOST`        | **yes**  | Backend URL (full URL, e.g. `https://my-instance.example.com` or `http://127.0.0.1:8765`).   |
+| `AGENT_MEMORIES_API_KEY`     | **yes**  | User API key (`am_live_...`) for authentication.                                             |
+| `AGENT_MEMORIES_PORT`        | no       | Port override. Inferred from URL scheme when omitted (443 for `https://`, 80 for `http://`). |
+
+## Using the Skill
+
+This package ships as a **skill** — add it to your agent's skill directory so it's auto-discovered:
+
+1. Copy `SKILL.md` (this file) and the `references/` directory into your agent's skill path (e.g. `~/.omp/agent/skills/agent-memories/`).
+2. Configure the MCP server in your agent's MCP config (e.g. `~/.omp/agent/mcp.json`) with the `env` block above.
+3. The agent will auto-discover the skill on next session and use agent-memories tools proactively.
+
+### Auto-memory instructions
+
+The skill includes agent-facing instructions for proactive memory use:
+
+- Every major task → `memory.write` a summary
+- New entity (file, function, module) discovered → `kg.upsert_node`
+- Session context → `wm.put "context"`
+- Before any task → `memory.search` for relevant context
 
 ## Architecture
 
@@ -70,9 +72,9 @@ Agent (MCP stdio)
   │
   ▼
 MCP Client Proxy (`@agentmemories/mcp`)
-  │  HTTP → backend REST API (default: https://agent-memories.com)
+  │  HTTP → backend REST API (AGENT_MEMORIES_HOST)
   ▼
-Backend REST API (external)
+Backend REST API
   │  MemoryService · KgService · WmService
   ▼
 SQLite
