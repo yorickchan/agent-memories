@@ -12,6 +12,11 @@ import type { KgService } from "@agent-memories/shared"
 import type { WmService } from "@agent-memories/shared"
 
 async function main() {
+  if (process.argv[2] === "install") {
+    const { runInstaller } = await import("./installer.js");
+    await runInstaller();
+    return;
+  }
   const config = loadConfig();
 
   // HTTP proxies implement the same method names as real services.

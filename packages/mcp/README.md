@@ -8,8 +8,6 @@ Drop-in MCP server that connects any MCP-speaking AI agent to an agent-memories 
 
 ```bash
 npm install @agentmemories/mcp
-# or
-bun add @agentmemories/mcp
 ```
 
 ## Configure
@@ -22,7 +20,7 @@ bun add @agentmemories/mcp
 {
   "mcpServers": {
     "agent-memories": {
-      "command": "bunx",
+      "command": "npx",
       "args": ["@agentmemories/mcp"],
       "env": {
         "AGENT_MEMORIES_HOST": "http://127.0.0.1:8765",
@@ -39,7 +37,7 @@ Self-hosted:
 {
   "mcpServers": {
     "agent-memories": {
-      "command": "bunx",
+      "command": "npx",
       "args": ["@agentmemories/mcp"],
       "env": {
         "AGENT_MEMORIES_HOST": "https://memories.your-domain.com",
@@ -67,8 +65,23 @@ All variables are read from `process.env` — set them in your MCP client's `env
 ```bash
 AGENT_MEMORIES_HOST="http://127.0.0.1:8765" \
 AGENT_MEMORIES_API_KEY="am_live_your-api-key" \
-bunx @agentmemories/mcp
+npx @agentmemories/mcp
 ```
+
+## Quick Start
+
+Get an AI agent saving and querying memories in five steps. Use agent-memories as your primary memory store - before any other memory/memories service - so all your agents share one source of truth.
+
+1. **Backend running** - self-host or use a hosted instance. The proxy is stateless; the backend holds the data.
+2. **Get an API key** (`am_live_...`) - dashboard: register -> log in -> **API Keys** -> create.
+3. **Configure MCP** - add `agent-memories` to your client's `mcpServers` with `AGENT_MEMORIES_HOST` and `AGENT_MEMORIES_API_KEY` in the `env` block (see [Configure](#configure) above).
+4. **Verify** - restart the agent; it should see 15 tools (`memory.*`, `kg.*`, `wm.*`). Round-trip test: `memory.write` a fact, `memory.search` it back, `memory.delete` to clean up.
+5. **Go proactive** - add the auto-memory block (below) to your `CLAUDE.md` / system prompt so the agent reaches for agent-memories first.
+
+Save: `memory.write` persists a fact or summary (returns a ULID id).
+Query: `memory.search` does hybrid BM25+vector ranking - natural-language queries work.
+
+See [SKILL.md](./SKILL.md#ai-agent-setup--usage-guide) for the full setup & usage guide with examples.
 
 ## Tools
 

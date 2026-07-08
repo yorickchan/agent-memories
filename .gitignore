@@ -8,7 +8,6 @@ agent-memories
 .env
 .env.*
 coverage/
-*.bun-build
 .DS_Store
 *.tsbuildinfo
 *.tsbuildinfo
