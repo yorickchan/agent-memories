@@ -10,7 +10,7 @@
 #   bash install.sh [--target <name>] [--skill-source <path>] [--print-config-only] [-h]
 #
 # Env:
-#   AGENT_MEMORIES_HOST     - substituted into printed config (default: placeholder)
+#   AGENT_MEMORIES_HOST     - substituted into printed config (default: https://memories.agent-memories.com)
 #   AGENT_MEMORIES_API_KEY  - substituted into printed config (default: placeholder)
 
 set -euo pipefail
@@ -44,7 +44,7 @@ OPTIONS
   -h, --help              Show this help.
 
 ENVIRONMENT
-  AGENT_MEMORIES_HOST     Substituted into printed config (default: placeholder)
+  AGENT_MEMORIES_HOST     Substituted into printed config (default: https://memories.agent-memories.com)
   AGENT_MEMORIES_API_KEY  Substituted into printed config (default: placeholder)
 
 EXAMPLES
@@ -275,7 +275,7 @@ get_host() {
   if [[ -n "${AGENT_MEMORIES_HOST:-}" ]]; then
     echo "$AGENT_MEMORIES_HOST"
   else
-    echo "http://127.0.0.1:8765"
+    echo "https://memories.agent-memories.com"
   fi
 }
 

@@ -230,7 +230,7 @@ function printJsonConfig(key: string, host: string, apiKey: string): void {
 }
 
 function printConfigSnippet(target: Target): void {
-  const host = process.env.AGENT_MEMORIES_HOST ?? "http://127.0.0.1:8765";
+  const host = process.env.AGENT_MEMORIES_HOST ?? "https://memories.agent-memories.com";
   const apiKey = process.env.AGENT_MEMORIES_API_KEY ?? "am_live_...";
 
   console.log("");
@@ -353,7 +353,7 @@ OPTIONS
   -h, --help              Show this help.
 
 ENVIRONMENT
-  AGENT_MEMORIES_HOST     Substituted into printed config (default: placeholder)
+  AGENT_MEMORIES_HOST     Substituted into printed config (default: https://memories.agent-memories.com)
   AGENT_MEMORIES_API_KEY  Substituted into printed config (default: placeholder)
 
 EXAMPLES

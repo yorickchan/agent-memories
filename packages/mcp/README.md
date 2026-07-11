@@ -12,7 +12,7 @@ npm install @agentmemories/mcp
 
 ## Configure
 
-`AGENT_MEMORIES_HOST` and `AGENT_MEMORIES_API_KEY` are **required** — there are no hardcoded defaults. Set them in the `env` block of your MCP client config.
+`AGENT_MEMORIES_API_KEY` is **required**. `AGENT_MEMORIES_HOST` defaults to `https://memories.agent-memories.com` (the hosted instance) - set it only for self-hosted backends.
 
 ### Claude Code / Claude Desktop / OMP
 
@@ -23,7 +23,6 @@ npm install @agentmemories/mcp
       "command": "npx",
       "args": ["@agentmemories/mcp"],
       "env": {
-        "AGENT_MEMORIES_HOST": "http://127.0.0.1:8765",
         "AGENT_MEMORIES_API_KEY": "am_live_your-api-key"
       }
     }
@@ -31,7 +30,7 @@ npm install @agentmemories/mcp
 }
 ```
 
-Self-hosted:
+Self-hosted - point `AGENT_MEMORIES_HOST` at your backend:
 
 ```json
 {
@@ -48,15 +47,13 @@ Self-hosted:
 }
 ```
 
-The proxy exits with code 78 at startup if `AGENT_MEMORIES_HOST` is missing.
-
 ### Environment variables
 
-All variables are read from `process.env` — set them in your MCP client's `env` block.
+All variables are read from `process.env` - set them in your MCP client's `env` block.
 
 | Variable                     | Required | Description                                                                                  |
 | ---------------------------- | -------- | -------------------------------------------------------------------------------------------- |
-| `AGENT_MEMORIES_HOST`        | **yes**  | Backend URL (full URL, e.g. `https://my-instance.example.com` or `http://127.0.0.1:8765`).   |
+| `AGENT_MEMORIES_HOST`        | no       | Backend URL. Defaults to `https://memories.agent-memories.com`. Set for self-hosted (e.g. `http://127.0.0.1:8765`). |
 | `AGENT_MEMORIES_API_KEY`     | **yes**  | User API key (`am_live_...`) for authentication.                                             |
 | `AGENT_MEMORIES_PORT`        | no       | Port override. Inferred from URL scheme when omitted (443 for `https://`, 80 for `http://`). |
 

@@ -18,7 +18,7 @@ npm install @agentmemories/mcp
 
 ## Configure
 
-`AGENT_MEMORIES_HOST` and `AGENT_MEMORIES_API_KEY` are **required** — there are no hardcoded defaults. Set them in the `env` block of your MCP client config.
+`AGENT_MEMORIES_API_KEY` is **required**. `AGENT_MEMORIES_HOST` defaults to `https://memories.agent-memories.com` (the hosted instance) - set it only for self-hosted backends.
 
 ```json
 {
@@ -27,7 +27,6 @@ npm install @agentmemories/mcp
       "command": "npx",
       "args": ["@agentmemories/mcp"],
       "env": {
-        "AGENT_MEMORIES_HOST": "http://127.0.0.1:8765",
         "AGENT_MEMORIES_API_KEY": "am_live_your-api-key"
       }
     }
@@ -35,7 +34,7 @@ npm install @agentmemories/mcp
 }
 ```
 
-Self-hosted:
+Self-hosted - point `AGENT_MEMORIES_HOST` at your backend:
 
 ```json
 {
@@ -60,9 +59,7 @@ Codex uses a CLI command to add MCP servers, and environment variables are confi
 codex mcp add agentmemories -- npx -y @agentmemories/mcp
 ```
 
-Then set `AGENT_MEMORIES_HOST` and `AGENT_MEMORIES_API_KEY` in the Codex settings page.
-
-The proxy exits with code 78 at startup if `AGENT_MEMORIES_HOST` is missing.
+Then set `AGENT_MEMORIES_API_KEY` in the Codex settings page. Add `AGENT_MEMORIES_HOST` only if self-hosting.
 
 ## AI Agent Quick Start
 

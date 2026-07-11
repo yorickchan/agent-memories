@@ -1,6 +1,6 @@
 {
     "name": "@agentmemories/mcp",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "author": "Yorick Chan <yorick@gmail.com> ",
     "description": "Universal AI-agent memory — MCP client for agent-memories server",
     "type": "module",

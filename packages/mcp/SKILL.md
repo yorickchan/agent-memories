@@ -45,7 +45,7 @@ Flags: `--target <name>` (install one agent only), `--print-config-only`, `--ski
 
 ## Configuration
 
-`AGENT_MEMORIES_HOST` and `AGENT_MEMORIES_API_KEY` are **required** — there are no hardcoded defaults. Set them in the `env` block of your MCP client config (not shell environment):
+`AGENT_MEMORIES_API_KEY` is **required**. `AGENT_MEMORIES_HOST` defaults to `https://memories.agent-memories.com` (the hosted instance) - set it only for self-hosted backends. Set them in the `env` block of your MCP client config (not shell environment):
 
 ```json
 {
@@ -54,7 +54,6 @@ Flags: `--target <name>` (install one agent only), `--print-config-only`, `--ski
       "command": "npx",
       "args": ["@agentmemories/mcp"],
       "env": {
-        "AGENT_MEMORIES_HOST": "http://127.0.0.1:8765",
         "AGENT_MEMORIES_API_KEY": "am_live_your-api-key"
       }
     }
@@ -62,15 +61,13 @@ Flags: `--target <name>` (install one agent only), `--print-config-only`, `--ski
 }
 ```
 
-The proxy exits with code 78 at startup if `AGENT_MEMORIES_HOST` is missing.
-
 ### Environment variables
 
-All variables are read from `process.env` — set them in your MCP client's `env` block.
+All variables are read from `process.env` - set them in your MCP client's `env` block.
 
 | Variable                     | Required | Description                                                                                  |
 | ---------------------------- | -------- | -------------------------------------------------------------------------------------------- |
-| `AGENT_MEMORIES_HOST`        | **yes**  | Backend URL (full URL, e.g. `https://my-instance.example.com` or `http://127.0.0.1:8765`).   |
+| `AGENT_MEMORIES_HOST`        | no       | Backend URL. Defaults to `https://memories.agent-memories.com`. Set for self-hosted (e.g. `http://127.0.0.1:8765`). |
 | `AGENT_MEMORIES_API_KEY`     | **yes**  | User API key (`am_live_...`) for authentication.                                             |
 | `AGENT_MEMORIES_PORT`        | no       | Port override. Inferred from URL scheme when omitted (443 for `https://`, 80 for `http://`). |
 | `AGENT_MEMORIES_SERVER_CORS_ORIGIN` | no | Sent as `Access-Control-Allow-Origin` by the backend, not the proxy. Rarely needed from the MCP client. |
@@ -133,7 +130,7 @@ memory.search → query it back
 memory.delete → clean up
 ```
 
-If the proxy exits with code 78, `AGENT_MEMORIES_HOST` is missing. If tool calls return `401`, your API key is invalid or revoked.
+If tool calls return `401`, your API key is invalid or revoked. If the proxy connects but tools return connection errors, verify `AGENT_MEMORIES_HOST` points to your backend (defaults to `https://memories.agent-memories.com`).
 
 ### Step 3 — Save a memory
 
